@@ -8,6 +8,8 @@ import java.util.List;
 public interface ClientDataService extends CrudRepository<Client,Long> {
     Client findByEmail(String email);
 
+    Client findByEmailAndPassword(String email, String password);
+
     Client findByToken(String token);
 
     List<Client> findAll();

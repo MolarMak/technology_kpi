@@ -1,7 +1,8 @@
 package com.molarmak.coursework.controllers;
 
 import com.molarmak.coursework.entities.db.Client;
-import com.molarmak.coursework.entities.rest.ClientRequest;
+import com.molarmak.coursework.entities.rest.LoginRequest;
+import com.molarmak.coursework.entities.rest.RegisterRequest;
 import com.molarmak.coursework.entities.rest.ClientResponse;
 import com.molarmak.coursework.entities.rest.Response;
 import com.molarmak.coursework.services.ClientDataService;
@@ -21,7 +22,7 @@ public class ClientController {
     private ClientDataService repository;
 
     @PostMapping("/register")
-    public ResponseEntity<Response> register(@RequestBody ClientRequest request) {
+    public ResponseEntity<Response> register(@RequestBody RegisterRequest request) {
         Client clientCheck = repository.findByEmail(request.getEmail());
 
         if(clientCheck != null) {
@@ -47,7 +48,7 @@ public class ClientController {
         return new ResponseEntity<>(new Response(response), HttpStatus.OK);
     }
 
-    @GetMapping("/login")
+    @GetMapping("/profile")
     public ResponseEntity<Response> getClientByToken(@RequestParam String token) {
         Client client = repository.findByToken(token);
 
@@ -58,5 +59,21 @@ public class ClientController {
         }
 
         return new ResponseEntity<>(new Response(client), HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Response> loginByEmailAndPassword(@RequestBody LoginRequest request) {
+        Client clientCheck = repository.findByEmailAndPassword(request.getEmail(), request.getPassword());
+
+        if(clientCheck == null) {
+            ArrayList<String> errors = new ArrayList<>();
+            errors.add("Email or password incorrect!");
+            return new ResponseEntity<>(new Response(errors), HttpStatus.OK);
+        }
+
+        ClientResponse response = new ClientResponse();
+        response.setToken(clientCheck.getToken());
+
+        return new ResponseEntity<>(new Response(response), HttpStatus.OK);
     }
 }

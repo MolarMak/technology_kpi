@@ -1,6 +1,6 @@
 package com.molarmak.coursework.entities.rest;
 
-public class ClientRequest {
+public class RegisterRequest {
 
     private String email;
 
