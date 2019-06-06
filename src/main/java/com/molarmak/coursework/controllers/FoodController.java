@@ -1,12 +1,14 @@
 package com.molarmak.coursework.controllers;
 
-import com.molarmak.coursework.entities.Food;
+import com.molarmak.coursework.entities.db.Food;
+import com.molarmak.coursework.entities.rest.Response;
 import com.molarmak.coursework.services.FoodDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -17,35 +19,34 @@ public class FoodController {
     private FoodDataService repository;
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> create(@RequestBody Food food) {
-        Food checkFood = repository.findById(food.id);
+    public ResponseEntity<Response> create(@RequestBody Food food) {
+        Food checkFood = repository.findById(food.getId());
 
         if(checkFood != null) {
-            return new ResponseEntity(HttpStatus.CONFLICT);
+            ArrayList<String> errors = new ArrayList<>();
+            errors.add("This food already exists!");
+            return new ResponseEntity<>(new Response(errors), HttpStatus.OK);
         }
-
-        return new ResponseEntity<>(repository.save(food), HttpStatus.CREATED);
+        return new ResponseEntity<>(new Response(repository.save(food)), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Food> getFoodById(@PathVariable("id") long id) {
+    public ResponseEntity<Response> getFoodById(@PathVariable("id") long id) {
         Food food = repository.findById(id);
 
         if (food == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            ArrayList<String> errors = new ArrayList<>();
+            errors.add("Can't find food by this id");
+            return new ResponseEntity<>(new Response(errors), HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<>(food, HttpStatus.OK);
+        return new ResponseEntity<>(new Response(food), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Food>> getAllFoods() {
+    public ResponseEntity<Response> getAllFoods() {
         List<Food> foodList = repository.findAll();
-        if (foodList == null || foodList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(foodList, HttpStatus.OK);
+        return new ResponseEntity<>(new Response(foodList), HttpStatus.OK);
     }
 
 }
