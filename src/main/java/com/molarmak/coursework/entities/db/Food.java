@@ -3,6 +3,7 @@ package com.molarmak.coursework.entities.db;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "food")
 public class Food {
 
     @Id

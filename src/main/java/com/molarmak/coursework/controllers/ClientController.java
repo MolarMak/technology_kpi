@@ -55,7 +55,7 @@ public class ClientController {
         if (client == null) {
             ArrayList<String> errors = new ArrayList<>();
             errors.add("Token not valid");
-            return new ResponseEntity<>(new Response(errors), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new Response(errors), HttpStatus.OK);
         }
 
         return new ResponseEntity<>(new Response(client), HttpStatus.OK);

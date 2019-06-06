@@ -37,7 +37,7 @@ public class FoodController {
         if (food == null) {
             ArrayList<String> errors = new ArrayList<>();
             errors.add("Can't find food by this id");
-            return new ResponseEntity<>(new Response(errors), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new Response(errors), HttpStatus.OK);
         }
 
         return new ResponseEntity<>(new Response(food), HttpStatus.OK);
