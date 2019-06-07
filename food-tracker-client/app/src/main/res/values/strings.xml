@@ -35,4 +35,8 @@
     <string name="protein_hint">Protein: </string>
     <string name="fats_hint">Fats: </string>
     <string name="carbohydrates_hint">Carbohydrates: </string>
+
+    <!-- Eat fragment -->
+    <string name="search_hint">Search in food list</string>
+    <string name="eat">Eat</string>
 </resources>
