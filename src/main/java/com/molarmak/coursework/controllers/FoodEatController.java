@@ -11,12 +11,10 @@ import com.molarmak.coursework.services.FoodEatDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/eat")
@@ -52,6 +50,20 @@ public class FoodEatController {
         foodEatRepository.save(foodEat);
 
         return new ResponseEntity<>(new Response(null), HttpStatus.OK);
+    }
+
+    @GetMapping("/calories")
+    public ResponseEntity<Response> getCaloriesByClient(@RequestParam String token) {
+        Client client = clientRepository.findByToken(token);
+
+        if(client == null) {
+            ArrayList<String> errors = new ArrayList<>();
+            errors.add("Token not valid");
+            return new ResponseEntity<>(new Response(errors), HttpStatus.OK);
+        }
+
+        List<FoodEat> eatenByClient = foodEatRepository.findAllByClientId(client.getId());
+        return new ResponseEntity<>(new Response(eatenByClient), HttpStatus.OK);
     }
 
 }

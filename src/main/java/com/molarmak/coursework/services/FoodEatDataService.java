@@ -9,4 +9,5 @@ public interface FoodEatDataService extends CrudRepository<FoodEat,Long> {
 
     List<FoodEat> findAll();
 
+    List<FoodEat> findAllByClientId(long clientId);
 }
