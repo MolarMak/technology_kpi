@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Food Tracker</string>
 
+    <!-- Common -->
+    <string name="update">Update</string>
+
     <!-- Login Activity -->
     <string name="login_with">Log in with</string>
     <string name="email_hint">Input email</string>
@@ -10,4 +13,11 @@
     <!-- Register Activity -->
     <string name="register_with">Register with</string>
     <string name="register">Register</string>
+
+    <!-- Profile Fragment -->
+    <string name="name_hint">Input your name</string>
+    <string name="age_hint">Input your age</string>
+    <string name="height_hint">Input your height</string>
+    <string name="weight_hint">Input your weight</string>
+    <string name="lifestyle_hint">Input your lifestyle</string>
 </resources>
