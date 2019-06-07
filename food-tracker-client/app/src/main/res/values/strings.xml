@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Food Tracker</string>
+
+    <!-- Login Activity -->
+    <string name="login_with">Log in with</string>
+    <string name="email_hint">Input email</string>
+    <string name="password_hint">Input password</string>
+    <string name="login">Log in</string>
+
+    <!-- Register Activity -->
+    <string name="register_with">Register with</string>
+    <string name="register">Register</string>
 </resources>
