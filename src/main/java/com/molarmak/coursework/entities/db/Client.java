@@ -1,5 +1,7 @@
 package com.molarmak.coursework.entities.db;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -33,6 +35,7 @@ public class Client {
     private String name;
 
     @Column
+    @JsonIgnore
     private String token;
 
     @Column
