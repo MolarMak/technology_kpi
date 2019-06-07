@@ -26,4 +26,13 @@
     <string name="title_overview">Overview</string>
     <string name="title_eat">Eat</string>
     <string name="title_profile">Profile</string>
+
+    <!-- Calories fragment -->
+    <string name="calories_hint">Calories: </string>
+    <string name="status_hint">Status: </string>
+
+    <!-- Food item -->
+    <string name="protein_hint">Protein: </string>
+    <string name="fats_hint">Fats: </string>
+    <string name="carbohydrates_hint">Carbohydrates: </string>
 </resources>
