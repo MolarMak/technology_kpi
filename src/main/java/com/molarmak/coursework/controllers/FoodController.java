@@ -15,8 +15,11 @@ import java.util.List;
 @RequestMapping("/api/foods")
 public class FoodController {
 
-    @Autowired
-    private FoodDataService repository;
+    private final FoodDataService repository;
+
+    public FoodController(FoodDataService repository) {
+        this.repository = repository;
+    }
 
     @PostMapping("/add")
     public ResponseEntity<Response> create(@RequestBody Food food) {

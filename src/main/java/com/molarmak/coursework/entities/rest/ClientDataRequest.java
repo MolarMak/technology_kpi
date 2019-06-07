@@ -1,10 +1,8 @@
 package com.molarmak.coursework.entities.rest;
 
-public class RegisterRequest {
+public class ClientDataRequest {
 
-    private String email;
-
-    private String password;
+    private String token;
 
     private String name;
 
@@ -16,20 +14,12 @@ public class RegisterRequest {
 
     private int lifeStyle;
 
-    public String getEmail() {
-        return email;
+    public String getToken() {
+        return token;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getName() {

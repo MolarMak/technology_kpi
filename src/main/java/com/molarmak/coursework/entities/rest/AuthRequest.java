@@ -1,6 +1,6 @@
 package com.molarmak.coursework.entities.rest;
 
-public class LoginRequest {
+public class AuthRequest {
 
     private String email;
     private String password;

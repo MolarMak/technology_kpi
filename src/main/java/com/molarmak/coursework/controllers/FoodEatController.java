@@ -21,14 +21,17 @@ import java.util.List;
 @RequestMapping("/api/eat")
 public class FoodEatController {
 
-    @Autowired
-    private FoodEatDataService foodEatRepository;
+    private final FoodEatDataService foodEatRepository;
 
-    @Autowired
-    private ClientDataService clientRepository;
+    private final ClientDataService clientRepository;
 
-    @Autowired
-    private FoodDataService foodRepository;
+    private final FoodDataService foodRepository;
+
+    public FoodEatController(FoodEatDataService foodEatRepository, ClientDataService clientRepository, FoodDataService foodRepository) {
+        this.foodEatRepository = foodEatRepository;
+        this.clientRepository = clientRepository;
+        this.foodRepository = foodRepository;
+    }
 
     @PostMapping("/new")
     public ResponseEntity<Response> clientEatFood(@RequestBody ClientEatRequest request) {
