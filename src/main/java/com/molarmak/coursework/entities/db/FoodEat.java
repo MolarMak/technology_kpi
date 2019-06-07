@@ -1,5 +1,7 @@
 package com.molarmak.coursework.entities.db;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,20 +10,23 @@ public class FoodEat {
 
     public FoodEat() {}
 
-    public FoodEat(long clientId, long foodId) {
-        this.clientId = clientId;
-        this.foodId = foodId;
+    public FoodEat(Client client, Food food) {
+        this.client = client;
+        this.food = food;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column
-    private long clientId;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    @JsonIgnore
+    private Client client;
 
-    @Column
-    private long foodId;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "food_id", referencedColumnName = "id")
+    private Food food;
 
     public long getId() {
         return id;
@@ -31,19 +36,19 @@ public class FoodEat {
         this.id = id;
     }
 
-    public long getClientId() {
-        return clientId;
+    public Client getClient() {
+        return client;
     }
 
-    public void setClientId(long clientId) {
-        this.clientId = clientId;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
-    public long getFoodId() {
-        return foodId;
+    public Food getFood() {
+        return food;
     }
 
-    public void setFoodId(long foodId) {
-        this.foodId = foodId;
+    public void setFood(Food food) {
+        this.food = food;
     }
 }

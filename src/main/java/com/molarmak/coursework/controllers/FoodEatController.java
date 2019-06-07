@@ -3,6 +3,7 @@ package com.molarmak.coursework.controllers;
 import com.molarmak.coursework.entities.db.Client;
 import com.molarmak.coursework.entities.db.Food;
 import com.molarmak.coursework.entities.db.FoodEat;
+import com.molarmak.coursework.entities.rest.CaloriesResponse;
 import com.molarmak.coursework.entities.rest.ClientEatRequest;
 import com.molarmak.coursework.entities.rest.Response;
 import com.molarmak.coursework.services.ClientDataService;
@@ -46,7 +47,7 @@ public class FoodEatController {
             return new ResponseEntity<>(new Response(errors), HttpStatus.OK);
         }
 
-        FoodEat foodEat = new FoodEat(client.getId(), food.getId());
+        FoodEat foodEat = new FoodEat(client, food);
         foodEatRepository.save(foodEat);
 
         return new ResponseEntity<>(new Response(null), HttpStatus.OK);
@@ -63,7 +64,14 @@ public class FoodEatController {
         }
 
         List<FoodEat> eatenByClient = foodEatRepository.findAllByClientId(client.getId());
-        return new ResponseEntity<>(new Response(eatenByClient), HttpStatus.OK);
+
+        int calories = 0;
+        for(FoodEat fe: eatenByClient) {
+            calories += fe.getFood().getCarbohydrates() + fe.getFood().getFats() + fe.getFood().getProtein();
+        }
+
+        CaloriesResponse response = new CaloriesResponse(calories, true, eatenByClient);
+        return new ResponseEntity<>(new Response(response), HttpStatus.OK);
     }
 
 }
