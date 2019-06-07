@@ -53,7 +53,7 @@ public class FoodEatController {
         FoodEat foodEat = new FoodEat(client, food);
         foodEatRepository.save(foodEat);
 
-        return new ResponseEntity<>(new Response(null), HttpStatus.OK);
+        return new ResponseEntity<>(new Response(), HttpStatus.OK);
     }
 
     @GetMapping("/calories")

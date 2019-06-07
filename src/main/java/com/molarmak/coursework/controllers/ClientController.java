@@ -84,7 +84,7 @@ public class ClientController {
         clientCheck.setLifeStyle(request.getLifeStyle());
 
         repository.save(clientCheck);
-        return new ResponseEntity<>(new Response(null), HttpStatus.OK);
+        return new ResponseEntity<>(new Response(), HttpStatus.OK);
     }
 
     @GetMapping("/profile")

@@ -16,6 +16,12 @@ public class Response {
         this.errors = errors;
     }
 
+    public Response() {
+        this.data = null;
+        this.status = 1;
+        this.errors = null;
+    }
+
     private Object data;
     private int status;
     private ArrayList<String> errors;
