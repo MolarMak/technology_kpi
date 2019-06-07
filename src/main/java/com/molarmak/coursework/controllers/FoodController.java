@@ -18,7 +18,7 @@ public class FoodController {
     @Autowired
     private FoodDataService repository;
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping("/add")
     public ResponseEntity<Response> create(@RequestBody Food food) {
         Food checkFood = repository.findById(food.getId());
 
@@ -30,7 +30,7 @@ public class FoodController {
         return new ResponseEntity<>(new Response(repository.save(food)), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/info/{id}")
     public ResponseEntity<Response> getFoodById(@PathVariable("id") long id) {
         Food food = repository.findById(id);
 
@@ -43,10 +43,15 @@ public class FoodController {
         return new ResponseEntity<>(new Response(food), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Response> getAllFoods() {
-        List<Food> foodList = repository.findAll();
-        return new ResponseEntity<>(new Response(foodList), HttpStatus.OK);
+    @GetMapping("/search")
+    public ResponseEntity<Response> getAllFoods(@RequestParam String foodName) {
+        if(foodName.isEmpty()) {
+            List<Food> foodList = repository.findAll();
+            return new ResponseEntity<>(new Response(foodList), HttpStatus.OK);
+        } else {
+            List<Food> foodList = repository.findByNameIgnoreCaseContaining(foodName);
+            return new ResponseEntity<>(new Response(foodList), HttpStatus.OK);
+        }
     }
 
 }

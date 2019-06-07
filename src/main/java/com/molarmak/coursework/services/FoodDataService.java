@@ -9,4 +9,6 @@ public interface FoodDataService extends CrudRepository<Food,Long> {
     Food findById(long id);
 
     List<Food> findAll();
+
+    List<Food> findByNameIgnoreCaseContaining(String name);
 }
