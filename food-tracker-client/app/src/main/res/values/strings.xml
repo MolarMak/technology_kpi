@@ -20,4 +20,10 @@
     <string name="height_hint">Input your height</string>
     <string name="weight_hint">Input your weight</string>
     <string name="lifestyle_hint">Input your lifestyle</string>
+
+    <!-- Main Activity -->
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_overview">Overview</string>
+    <string name="title_eat">Eat</string>
+    <string name="title_profile">Profile</string>
 </resources>
