@@ -1,4 +1,4 @@
-package com.molarmak.coursework.bll;
+package com.molarmak.coursework.bll.controllers;
 
 import com.molarmak.coursework.dal.db.Food;
 import com.molarmak.coursework.pl.FoodResponse;
