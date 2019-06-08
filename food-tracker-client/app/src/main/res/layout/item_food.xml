@@ -35,6 +35,15 @@
 
     </LinearLayout>
 
+    <View
+        android:id="@+id/isSelectedIndicator"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_toStartOf="@id/foodName"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="15dp"
+        android:background="@android:color/darker_gray"/>
+
     <TextView
         android:id="@+id/foodName"
         android:layout_width="wrap_content"

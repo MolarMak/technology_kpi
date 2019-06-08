@@ -16,14 +16,13 @@ import android.widget.TextView
 import android.widget.Toast
 import com.molarmak.foodtracker.R
 import com.molarmak.foodtracker.helper.ViewType
-import com.molarmak.foodtracker.main.overview.EatenFoodResponse
 import com.molarmak.foodtracker.main.overview.FoodResponse
 import com.molarmak.foodtracker.more.AddFoodActivity
 import kotlinx.android.synthetic.main.fragment_eat.*
-import kotlinx.android.synthetic.main.fragment_eat.recycler
 
 interface EatFoodView: ViewType {
     fun endLoadAllFood(foods: ArrayList<FoodResponse>)
+    fun endEatFood()
 }
 
 class EatFoodFragment: Fragment(), EatFoodView {
@@ -51,7 +50,10 @@ class EatFoodFragment: Fragment(), EatFoodView {
         recycler?.layoutManager = LinearLayoutManager(context)
         recycler?.adapter = adapter
         eatButton.setOnClickListener {
-
+            val selectedItem = adapter.getItems().firstOrNull { it.isSelected }
+            if(selectedItem != null) {
+                presenter.startEatFood(selectedItem.id)
+            }
         }
         addButton.setOnClickListener {
             activity?.finish()
@@ -62,6 +64,12 @@ class EatFoodFragment: Fragment(), EatFoodView {
     override fun endLoadAllFood(foods: ArrayList<FoodResponse>) {
         activity?.runOnUiThread {
             adapter.setFoodHistory(foods)
+        }
+    }
+
+    override fun endEatFood() {
+        activity?.runOnUiThread {
+            Toast.makeText(context, getString(R.string.end_eat_food), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -96,9 +104,24 @@ class RecycleViewAdapter(private val context: Context?): RecyclerView.Adapter<Re
             viewHolder.fatsText.text = "${context?.getString(R.string.fats_hint)} ${item.fats}"
             viewHolder.carbohydratesText.text = "${context?.getString(R.string.carbohydrates_hint)} ${item.carbohydrates}"
             viewHolder.foodName.text = item.name
+            if(item.isSelected) {
+                viewHolder.isSelectedIndicator.visibility = View.VISIBLE
+            } else {
+                viewHolder.isSelectedIndicator.visibility = View.GONE
+            }
+
+            viewHolder.itemView.setOnClickListener {
+                repoList.forEach { it.isSelected = false }
+                item.isSelected = true
+                notifyDataSetChanged()
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    fun getItems(): ArrayList<FoodResponse> {
+        return repoList
     }
 
     override fun getItemCount(): Int {
@@ -110,5 +133,6 @@ class RecycleViewAdapter(private val context: Context?): RecyclerView.Adapter<Re
         val fatsText: TextView = itemView.findViewById(R.id.fatsText)
         val carbohydratesText: TextView = itemView.findViewById(R.id.carbohydratesText)
         val foodName: TextView = itemView.findViewById(R.id.foodName)
+        val isSelectedIndicator: View = itemView.findViewById(R.id.isSelectedIndicator)
     }
 }

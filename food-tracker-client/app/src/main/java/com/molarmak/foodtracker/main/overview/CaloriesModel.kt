@@ -27,7 +27,9 @@ data class FoodResponse(
     @SerializedName("protein") @Expose val protein: Int,
     @SerializedName("fats") @Expose val fats: Int,
     @SerializedName("carbohydrates") @Expose val carbohydrates: Int
-)
+) {
+    var isSelected = false
+}
 
 class CaloriesModel(private val view: CaloriesPresenterInterface): Callback {
 
