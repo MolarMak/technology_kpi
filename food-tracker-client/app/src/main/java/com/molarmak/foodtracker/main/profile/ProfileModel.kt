@@ -18,6 +18,23 @@ data class ProfileData(
     @SerializedName("lifeStyle") @Expose val lifeStyle: Int
 )
 
+data class UpdateProfileRequest(
+    @SerializedName("token") @Expose val token: String,
+    @SerializedName("name") @Expose val name: String,
+    @SerializedName("age") @Expose val age: Int,
+    @SerializedName("height") @Expose val height: Int,
+    @SerializedName("weight") @Expose val weight: Int,
+    @SerializedName("lifeStyle") @Expose val lifeStyle: Int
+)
+
+data class UpdateProfileForm(
+    @SerializedName("name") @Expose val name: String,
+    @SerializedName("age") @Expose val age: Int,
+    @SerializedName("height") @Expose val height: Int,
+    @SerializedName("weight") @Expose val weight: Int,
+    @SerializedName("lifeStyle") @Expose val lifeStyle: Int
+)
+
 class ProfileModel(private val view: LoadProfileData): Callback {
 
     private val profileRequest = {other:String -> getRequest(baseUrl + profileData, other, this)}
@@ -39,6 +56,28 @@ class ProfileModel(private val view: LoadProfileData): Callback {
 
     fun getProfileData(other: String) {
         profileRequest(other)
+    }
+
+}
+
+class UpdateProfileModel(private val view: ProfilePresenterInterface): Callback {
+
+    private val updateProfileRequest = { json: String -> postRequest(json, baseUrl + updateProfileData, this) }
+    private val TAG = "UpdateProfileModel"
+
+    override fun onFailure(call: Call?, e: IOException?) {
+        apiFailure(TAG, e, view)
+    }
+
+    override fun onResponse(call: Call?, response: Response?) {
+        val action = { _: JSONObject ->
+            view.endUpdateProfile()
+        }
+        apiResponse(TAG, response, view, action)
+    }
+
+    fun update(json: String) {
+        updateProfileRequest(json)
     }
 
 }

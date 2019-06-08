@@ -9,9 +9,11 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.molarmak.foodtracker.R
+import com.molarmak.foodtracker.helper.ERROR_FILL_FIELDS
 import com.molarmak.foodtracker.helper.ViewType
 import com.molarmak.foodtracker.main.MainActivity
 import kotlinx.android.synthetic.main.view_profile.*
+import java.lang.Exception
 
 enum class LifeStyleEnum(val intValue: Int) {
     LOW(1),
@@ -25,9 +27,12 @@ enum class LifeStyleEnum(val intValue: Int) {
 
 interface ProfileView: ViewType {
     fun endLoadProfileData(data: ProfileData)
+    fun endUpdateProfile()
 }
 
-class ProfileFragment: Fragment() {
+class ProfileFragment: Fragment(), ProfileView {
+
+    private val presenter: ProfilePresenterInterface = ProfilePresenterImpl(this)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v: View = inflater.inflate(R.layout.view_profile, null)
@@ -48,14 +53,49 @@ class ProfileFragment: Fragment() {
         lifestyleSpinner.adapter = lifestyleAdapter
 
         updateButton.setOnClickListener {
-            Toast.makeText(activity, getString(R.string.profile_updated), Toast.LENGTH_SHORT).show()
-            arguments?.getBoolean(IS_UPDATE_ACTIVITY_BUNDLE)?.let {
-                activity?.finish()
-                startActivity(Intent(context, MainActivity::class.java))
+            try {
+                presenter.startUpdateProfile(
+                    UpdateProfileForm(
+                        nameEdit.text.toString(),
+                        ageSpinner.selectedItem as Int,
+                        heightEdit.text.toString().toInt(),
+                        weightEdit.text.toString().toInt(),
+                        (lifestyleSpinner.selectedItem as LifeStyleEnum).intValue
+                    )
+                )
+            } catch (e: Exception) {
+                e.printStackTrace()
+                onError(ERROR_FILL_FIELDS)
             }
+        }
+    }
 
-            heightEdit
-            weightEdit
+    override fun endLoadProfileData(data: ProfileData) {
+        activity?.runOnUiThread {
+            try {
+                heightEdit.setText(data.height.toString())
+                weightEdit.setText(data.weight.toString())
+                ageSpinner.setSelection(data.age - 1)
+                lifestyleSpinner.setSelection(data.lifeStyle - 1)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    override fun endUpdateProfile() {
+        activity?.runOnUiThread {
+            Toast.makeText(context, getString(R.string.profile_updated), Toast.LENGTH_SHORT).show()
+        }
+        arguments?.getBoolean(IS_UPDATE_ACTIVITY_BUNDLE)?.let {
+            activity?.finish()
+            startActivity(Intent(context, MainActivity::class.java))
+        }
+    }
+
+    override fun onError(errors: ArrayList<String>) {
+        activity?.runOnUiThread {
+            Toast.makeText(context, errors.joinToString("\n"), Toast.LENGTH_SHORT).show()
         }
     }
 
