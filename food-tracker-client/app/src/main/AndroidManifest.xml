@@ -14,8 +14,8 @@
         <activity
             android:name=".main.MainActivity"
             android:label="@string/title_activity_main" />
-        <activity android:name=".auth.RegisterActivity" />
-        <activity android:name=".auth.LoginActivity">
+        <activity android:name=".auth.register.RegisterActivity" />
+        <activity android:name=".auth.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
