@@ -1,4 +1,4 @@
-package com.molarmak.coursework.entities.rest;
+package com.molarmak.coursework.pl;
 
 public class AuthRequest {
 

@@ -1,6 +1,6 @@
-package com.molarmak.coursework.services;
+package com.molarmak.coursework.dal;
 
-import com.molarmak.coursework.entities.db.Client;
+import com.molarmak.coursework.dal.db.Client;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

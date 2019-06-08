@@ -1,4 +1,4 @@
-package com.molarmak.coursework.entities.db;
+package com.molarmak.coursework.dal.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

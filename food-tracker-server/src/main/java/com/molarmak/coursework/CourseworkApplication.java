@@ -1,17 +1,13 @@
 package com.molarmak.coursework;
 
-import com.molarmak.coursework.entities.db.Food;
-import com.molarmak.coursework.services.FoodDataService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.molarmak.coursework.dal.db.Food;
+import com.molarmak.coursework.dal.FoodDataService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 @SpringBootApplication
 public class CourseworkApplication {

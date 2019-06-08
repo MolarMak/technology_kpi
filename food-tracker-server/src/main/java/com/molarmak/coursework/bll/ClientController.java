@@ -1,13 +1,12 @@
-package com.molarmak.coursework.controllers;
+package com.molarmak.coursework.bll;
 
-import com.molarmak.coursework.entities.db.Client;
-import com.molarmak.coursework.entities.rest.AuthRequest;
-import com.molarmak.coursework.entities.rest.ClientDataRequest;
-import com.molarmak.coursework.entities.rest.ClientResponse;
-import com.molarmak.coursework.entities.rest.Response;
-import com.molarmak.coursework.services.ClientDataService;
+import com.molarmak.coursework.dal.db.Client;
+import com.molarmak.coursework.pl.AuthRequest;
+import com.molarmak.coursework.pl.ClientDataRequest;
+import com.molarmak.coursework.pl.ClientResponse;
+import com.molarmak.coursework.pl.Response;
+import com.molarmak.coursework.dal.ClientDataService;
 import org.apache.commons.lang.RandomStringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,10 +1,9 @@
-package com.molarmak.coursework.controllers;
+package com.molarmak.coursework.bll;
 
-import com.molarmak.coursework.entities.db.Food;
-import com.molarmak.coursework.entities.rest.FoodResponse;
-import com.molarmak.coursework.entities.rest.Response;
-import com.molarmak.coursework.services.FoodDataService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.molarmak.coursework.dal.db.Food;
+import com.molarmak.coursework.pl.FoodResponse;
+import com.molarmak.coursework.pl.Response;
+import com.molarmak.coursework.dal.FoodDataService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

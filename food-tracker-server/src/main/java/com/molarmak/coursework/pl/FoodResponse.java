@@ -1,6 +1,6 @@
-package com.molarmak.coursework.entities.rest;
+package com.molarmak.coursework.pl;
 
-import com.molarmak.coursework.entities.db.Food;
+import com.molarmak.coursework.dal.db.Food;
 
 import java.util.List;
 
