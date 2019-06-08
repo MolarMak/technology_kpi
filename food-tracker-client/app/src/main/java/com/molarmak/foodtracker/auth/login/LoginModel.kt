@@ -16,7 +16,7 @@ data class LoginRequest(
 
 class LoginModel(private val view: LoginPresenterInterface): Callback {
 
-    private val loginRequest = { json: String -> postRequest(json, base_url + loginRoute, this) }
+    private val loginRequest = { json: String -> postRequest(json, baseUrl + loginRoute, this) }
     private val TAG = "LoginModel"
 
     override fun onFailure(call: Call?, e: IOException?) {

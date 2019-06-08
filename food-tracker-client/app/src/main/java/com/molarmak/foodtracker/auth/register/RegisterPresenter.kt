@@ -1,10 +1,9 @@
 package com.molarmak.foodtracker.auth.register
 
 import com.google.gson.Gson
-import com.molarmak.foodtracker.helper.Cache
-import com.molarmak.foodtracker.helper.ERROR_FILL_FIELDS
-import com.molarmak.foodtracker.helper.LoadProfileData
-import com.molarmak.foodtracker.helper.PresenterType
+import com.molarmak.foodtracker.helper.*
+import com.molarmak.foodtracker.main.profile.ProfileData
+import com.molarmak.foodtracker.main.profile.ProfileModel
 
 interface RegisterPresenterInterface: PresenterType, LoadProfileData {
     fun startToRegister(request: RegisterRequest)
@@ -14,6 +13,7 @@ interface RegisterPresenterInterface: PresenterType, LoadProfileData {
 class RegisterPresenterImpl(private val view: RegisterView) : RegisterPresenterInterface {
 
     private val registerModel = RegisterModel(this)
+    private val profileModel = ProfileModel(this)
 
     override fun startToRegister(request: RegisterRequest) {
         if(!checkData(request)) { return }
@@ -26,11 +26,14 @@ class RegisterPresenterImpl(private val view: RegisterView) : RegisterPresenterI
     }
 
     override fun startLoadProfileData() {
-
+        val token = Cache.instance.token
+        if(token != null) {
+            profileModel.getProfileData("?token=$token")
+        } else onError(ERROR_UNHANDLED)
     }
 
-    override fun endLoadProfileData() {
-
+    override fun endLoadProfileData(data: ProfileData) {
+        view.endRegister(data.name.isNotEmpty() && data.age != 0 && data.height != 0 && data.weight != 0)
     }
 
     override fun onError(errors: ArrayList<String>) {

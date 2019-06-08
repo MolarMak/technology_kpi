@@ -2,7 +2,6 @@ package com.molarmak.foodtracker.auth.register
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import com.molarmak.foodtracker.auth.login.LoginPresenterInterface
 import com.molarmak.foodtracker.helper.*
 import okhttp3.Call
 import okhttp3.Callback
@@ -17,7 +16,7 @@ data class RegisterRequest(
 
 class RegisterModel(private val view: RegisterPresenterInterface): Callback {
 
-    private val registerRequest = { json: String -> postRequest(json, base_url + registerRoute, this) }
+    private val registerRequest = { json: String -> postRequest(json, baseUrl + registerRoute, this) }
     private val TAG = "RegisterModel"
 
     override fun onFailure(call: Call?, e: IOException?) {

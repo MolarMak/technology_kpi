@@ -12,7 +12,7 @@ import com.molarmak.foodtracker.more.ProfileUpdateActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
 interface LoginView: ViewType {
-    fun endLogin(isNull: Boolean)
+    fun endLogin(isNotNull: Boolean)
 }
 
 class LoginActivity : AppCompatActivity(), LoginView {
@@ -40,11 +40,11 @@ class LoginActivity : AppCompatActivity(), LoginView {
         }
     }
 
-    override fun endLogin(isNull: Boolean) {
-        if(isNull) {
-            startActivity(Intent(this, ProfileUpdateActivity::class.java))
-        } else {
+    override fun endLogin(isNotNull: Boolean) {
+        if(isNotNull) {
             startActivity(Intent(this, MainActivity::class.java))
+        } else {
+            startActivity(Intent(this, ProfileUpdateActivity::class.java))
         }
     }
 

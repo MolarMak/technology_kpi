@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.molarmak.foodtracker.R
 import com.molarmak.foodtracker.main.MainActivity
-import com.molarmak.foodtracker.main.ProfileFragment
+import com.molarmak.foodtracker.main.profile.ProfileFragment
 
 class ProfileUpdateActivity : AppCompatActivity() {
 

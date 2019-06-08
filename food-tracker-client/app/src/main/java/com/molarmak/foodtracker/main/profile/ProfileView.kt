@@ -1,4 +1,4 @@
-package com.molarmak.foodtracker.main
+package com.molarmak.foodtracker.main.profile
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.molarmak.foodtracker.R
+import com.molarmak.foodtracker.helper.ViewType
+import com.molarmak.foodtracker.main.MainActivity
 import kotlinx.android.synthetic.main.view_profile.*
 
 enum class LifeStyleEnum(val intValue: Int) {
@@ -19,6 +21,10 @@ enum class LifeStyleEnum(val intValue: Int) {
     override fun toString(): String{
         return this.name
     }
+}
+
+interface ProfileView: ViewType {
+    fun endLoadProfileData(data: ProfileData)
 }
 
 class ProfileFragment: Fragment() {
@@ -33,7 +39,11 @@ class ProfileFragment: Fragment() {
         ageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         ageSpinner.adapter = ageAdapter
 
-        val lifestyleAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, listOf(LifeStyleEnum.LOW, LifeStyleEnum.MEDIUM, LifeStyleEnum.HARD))
+        val lifestyleAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, listOf(
+            LifeStyleEnum.LOW,
+            LifeStyleEnum.MEDIUM,
+            LifeStyleEnum.HARD
+        ))
         lifestyleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         lifestyleSpinner.adapter = lifestyleAdapter
 

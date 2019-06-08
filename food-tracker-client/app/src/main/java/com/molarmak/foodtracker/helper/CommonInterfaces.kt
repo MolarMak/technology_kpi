@@ -1,5 +1,7 @@
 package com.molarmak.foodtracker.helper
 
+import com.molarmak.foodtracker.main.profile.ProfileData
+
 interface PresenterType {
     fun onError(errors: ArrayList<String>)
 }
@@ -8,11 +10,7 @@ interface ViewType {
     fun onError(errors: ArrayList<String>)
 }
 
-interface MainActivityUpdatedFragments {
-    fun update(eventId: Int)
-}
-
-interface LoadProfileData {
+interface LoadProfileData: PresenterType {
     fun startLoadProfileData()
-    fun endLoadProfileData()
+    fun endLoadProfileData(data: ProfileData)
 }

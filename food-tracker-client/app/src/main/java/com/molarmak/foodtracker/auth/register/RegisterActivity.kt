@@ -12,7 +12,7 @@ import com.molarmak.foodtracker.more.ProfileUpdateActivity
 import kotlinx.android.synthetic.main.activity_register.*
 
 interface RegisterView: ViewType {
-    fun endRegister(isNull: Boolean)
+    fun endRegister(isNotNull: Boolean)
 }
 
 class RegisterActivity : AppCompatActivity(), RegisterView {
@@ -43,11 +43,11 @@ class RegisterActivity : AppCompatActivity(), RegisterView {
         return true
     }
 
-    override fun endRegister(isNull: Boolean) {
-        if(isNull) {
-            startActivity(Intent(this, ProfileUpdateActivity::class.java))
-        } else {
+    override fun endRegister(isNotNull: Boolean) {
+        if(isNotNull) {
             startActivity(Intent(this, MainActivity::class.java))
+        } else {
+            startActivity(Intent(this, ProfileUpdateActivity::class.java))
         }
     }
 
