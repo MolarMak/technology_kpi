@@ -1,11 +1,14 @@
-package com.molarmak.foodtracker.main.overview
+package com.molarmak.foodtracker.main.eatFood
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,35 +16,52 @@ import android.widget.TextView
 import android.widget.Toast
 import com.molarmak.foodtracker.R
 import com.molarmak.foodtracker.helper.ViewType
-import kotlinx.android.synthetic.main.fragment_calories.*
+import com.molarmak.foodtracker.main.overview.EatenFoodResponse
+import com.molarmak.foodtracker.main.overview.FoodResponse
+import com.molarmak.foodtracker.more.AddFoodActivity
+import kotlinx.android.synthetic.main.fragment_eat.*
+import kotlinx.android.synthetic.main.fragment_eat.recycler
 
-interface CaloriesView: ViewType {
-    fun endLoadCalories(response: CaloriesResponse)
+interface EatFoodView: ViewType {
+    fun endLoadAllFood(foods: ArrayList<FoodResponse>)
 }
 
-class CaloriesFragment: Fragment(), CaloriesView {
+class EatFoodFragment: Fragment(), EatFoodView {
 
+    private val presenter: EatFoodPresenterInterface = EatFoodPresenterImpl(this)
     private lateinit var adapter: RecycleViewAdapter
-    private val presenter: CaloriesPresenterInterface = CaloriesPresenterImpl(this)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val v: View = inflater.inflate(R.layout.fragment_calories, null)
+        val v: View = inflater.inflate(R.layout.fragment_eat, null)
         return v
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        searchEdit.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) { }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                presenter.startLoadAllFood(s.toString())
+            }
+
+        })
+        presenter.startLoadAllFood("")
         adapter = RecycleViewAdapter(context)
         recycler?.layoutManager = LinearLayoutManager(context)
         recycler?.adapter = adapter
-        presenter.startLoadCalories()
+        eatButton.setOnClickListener {
+
+        }
+        addButton.setOnClickListener {
+            activity?.finish()
+            startActivity(Intent(context, AddFoodActivity::class.java))
+        }
     }
 
-    @SuppressLint("SetTextI18n")
-    override fun endLoadCalories(response: CaloriesResponse) {
+    override fun endLoadAllFood(foods: ArrayList<FoodResponse>) {
         activity?.runOnUiThread {
-            caloriesText?.text = "${getString(R.string.calories_hint)} ${response.calories}"
-            statusText?.text = "${getString(R.string.status_hint)} ${if(response.ok) "ok" else "not ok"}"
-            adapter.setFoodHistory(response.eatenFood)
+            adapter.setFoodHistory(foods)
         }
     }
 
@@ -50,14 +70,13 @@ class CaloriesFragment: Fragment(), CaloriesView {
             Toast.makeText(context, errors.joinToString("\n"), Toast.LENGTH_SHORT).show()
         }
     }
-
 }
 
 class RecycleViewAdapter(private val context: Context?): RecyclerView.Adapter<RecycleViewAdapter.ViewHolder>() {
 
-    private val repoList = ArrayList<EatenFoodResponse>()
+    private val repoList = ArrayList<FoodResponse>()
 
-    fun setFoodHistory(list: ArrayList<EatenFoodResponse>) {
+    fun setFoodHistory(list: ArrayList<FoodResponse>) {
         repoList.clear()
         repoList.addAll(list)
         notifyDataSetChanged()
@@ -73,10 +92,10 @@ class RecycleViewAdapter(private val context: Context?): RecyclerView.Adapter<Re
         try {
             val item = repoList[i]
 
-            viewHolder.proteinText.text = "${context?.getString(R.string.protein_hint)} ${item.food.protein}"
-            viewHolder.fatsText.text = "${context?.getString(R.string.fats_hint)} ${item.food.fats}"
-            viewHolder.carbohydratesText.text = "${context?.getString(R.string.carbohydrates_hint)} ${item.food.carbohydrates}"
-            viewHolder.foodName.text = item.food.name
+            viewHolder.proteinText.text = "${context?.getString(R.string.protein_hint)} ${item.protein}"
+            viewHolder.fatsText.text = "${context?.getString(R.string.fats_hint)} ${item.fats}"
+            viewHolder.carbohydratesText.text = "${context?.getString(R.string.carbohydrates_hint)} ${item.carbohydrates}"
+            viewHolder.foodName.text = item.name
         } catch (e: Exception) {
             e.printStackTrace()
         }

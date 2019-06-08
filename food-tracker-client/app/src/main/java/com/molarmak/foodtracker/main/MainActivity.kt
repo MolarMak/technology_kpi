@@ -5,6 +5,7 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.molarmak.foodtracker.R
+import com.molarmak.foodtracker.main.eatFood.EatFoodFragment
 import com.molarmak.foodtracker.main.overview.CaloriesFragment
 import com.molarmak.foodtracker.main.profile.ProfileFragment
 
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+        navigate(CaloriesFragment())
     }
 
     fun navigate(fragment: Fragment) {
