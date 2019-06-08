@@ -68,12 +68,20 @@ public class FoodEatController {
 
         List<FoodEat> eatenByClient = foodEatRepository.findAllByClientId(client.getId());
 
+        double possibleCalories =
+                ((200 - client.getAge()) *
+                        (200 - client.getWeight()) *
+                        ((250 - client.getHeight()) * 0.01) *
+                        (client.getLifeStyle())) / 10;
+
         int calories = 0;
         for(FoodEat fe: eatenByClient) {
-            calories += fe.getFood().getCarbohydrates() + fe.getFood().getFats() + fe.getFood().getProtein();
+            Food food = fe.getFood();
+            calories += food.getProtein() * 0.25 + food.getFats() * 0.5 + food.getCarbohydrates() * 0.1;
         }
+        System.out.println(possibleCalories);
 
-        CaloriesResponse response = new CaloriesResponse(calories, true, eatenByClient);
+        CaloriesResponse response = new CaloriesResponse(calories, possibleCalories >= calories, eatenByClient);
         return new ResponseEntity<>(new Response(response), HttpStatus.OK);
     }
 

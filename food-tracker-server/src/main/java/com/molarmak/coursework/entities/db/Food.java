@@ -23,6 +23,15 @@ public class Food {
     @Column
     private int carbohydrates;
 
+    public Food() {}
+
+    public Food(String name, int protein, int fats, int carbohydrates) {
+        this.name = name;
+        this.protein = protein;
+        this.fats = fats;
+        this.carbohydrates = carbohydrates;
+    }
+
     public long getId() {
         return id;
     }

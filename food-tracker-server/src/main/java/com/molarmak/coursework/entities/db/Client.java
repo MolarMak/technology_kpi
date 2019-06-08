@@ -27,9 +27,11 @@ public class Client {
     private long id;
 
     @Column
+    @JsonIgnore
     private String email;
 
     @Column
+    @JsonIgnore
     private String password;
 
     @Column

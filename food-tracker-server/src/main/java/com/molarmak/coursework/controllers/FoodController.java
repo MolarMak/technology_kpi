@@ -1,6 +1,7 @@
 package com.molarmak.coursework.controllers;
 
 import com.molarmak.coursework.entities.db.Food;
+import com.molarmak.coursework.entities.rest.FoodResponse;
 import com.molarmak.coursework.entities.rest.Response;
 import com.molarmak.coursework.services.FoodDataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,10 +51,10 @@ public class FoodController {
     public ResponseEntity<Response> getAllFoods(@RequestParam String foodName) {
         if(foodName.isEmpty()) {
             List<Food> foodList = repository.findAll();
-            return new ResponseEntity<>(new Response(foodList), HttpStatus.OK);
+            return new ResponseEntity<>(new Response(new FoodResponse(foodList)), HttpStatus.OK);
         } else {
             List<Food> foodList = repository.findByNameIgnoreCaseContaining(foodName);
-            return new ResponseEntity<>(new Response(foodList), HttpStatus.OK);
+            return new ResponseEntity<>(new Response(new FoodResponse(foodList)), HttpStatus.OK);
         }
     }
 
