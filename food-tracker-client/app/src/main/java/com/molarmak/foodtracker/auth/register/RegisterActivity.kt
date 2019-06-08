@@ -27,7 +27,7 @@ class RegisterActivity : AppCompatActivity(), RegisterView {
         supportActionBar?.setTitle(R.string.register)
 
         registerButton.setOnClickListener {
-            if(inputPassword == repeatPassword) {
+            if(inputPassword.text.toString() == repeatPassword.text.toString()) {
                 presenter.startToRegister(
                     RegisterRequest(
                         inputEmail.text.toString(),

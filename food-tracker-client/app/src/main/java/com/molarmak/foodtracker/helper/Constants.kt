@@ -1,8 +1,9 @@
 package com.molarmak.foodtracker.helper
 
-const val baseUrl = "http://localhost:8080"
+const val baseUrl = "http://192.168.1.143:8080"
 
 const val loginRoute = "/api/clients/login"
 const val registerRoute = "/api/clients/register"
-const val profileData = "/api/clients/profile"
-const val updateProfileData = "/api/clients/update"
+const val profileDataRoute = "/api/clients/profile"
+const val updateProfileDataRoute = "/api/clients/update"
+const val caloriesDataRoute = "/api/eat/calories"

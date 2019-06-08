@@ -11,7 +11,7 @@ import org.json.JSONObject
 import java.io.IOException
 
 data class ProfileData(
-    @SerializedName("name") @Expose val name: String,
+    @SerializedName("name") @Expose val name: String?,
     @SerializedName("age") @Expose val age: Int,
     @SerializedName("height") @Expose val height: Int,
     @SerializedName("weight") @Expose val weight: Int,
@@ -37,7 +37,7 @@ data class UpdateProfileForm(
 
 class ProfileModel(private val view: LoadProfileData): Callback {
 
-    private val profileRequest = {other:String -> getRequest(baseUrl + profileData, other, this)}
+    private val profileRequest = {other:String -> getRequest(baseUrl + profileDataRoute, other, this)}
     private val TAG = "ProfileModel"
 
     override fun onFailure(call: Call?, e: IOException?) {
@@ -62,7 +62,7 @@ class ProfileModel(private val view: LoadProfileData): Callback {
 
 class UpdateProfileModel(private val view: ProfilePresenterInterface): Callback {
 
-    private val updateProfileRequest = { json: String -> postRequest(json, baseUrl + updateProfileData, this) }
+    private val updateProfileRequest = { json: String -> postRequest(json, baseUrl + updateProfileDataRoute, this) }
     private val TAG = "UpdateProfileModel"
 
     override fun onFailure(call: Call?, e: IOException?) {

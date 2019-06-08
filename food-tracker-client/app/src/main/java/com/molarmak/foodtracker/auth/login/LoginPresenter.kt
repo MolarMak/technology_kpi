@@ -23,6 +23,7 @@ class LoginPresenterImpl(private val view: LoginView) : LoginPresenterInterface 
 
     override fun endLogin(token: String) {
         Cache.instance.token = token
+        startLoadProfileData()
     }
 
     override fun startLoadProfileData() {
@@ -33,7 +34,7 @@ class LoginPresenterImpl(private val view: LoginView) : LoginPresenterInterface 
     }
 
     override fun endLoadProfileData(data: ProfileData) {
-        view.endLogin(data.name.isNotEmpty() && data.age != 0 && data.height != 0 && data.weight != 0)
+        view.endLogin(data.name != null && data.name.isNotEmpty() && data.age != 0 && data.height != 0 && data.weight != 0)
     }
 
     override fun onError(errors: ArrayList<String>) {

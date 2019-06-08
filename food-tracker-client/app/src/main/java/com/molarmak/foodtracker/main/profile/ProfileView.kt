@@ -68,11 +68,13 @@ class ProfileFragment: Fragment(), ProfileView {
                 onError(ERROR_FILL_FIELDS)
             }
         }
+        presenter.startLoadProfileData()
     }
 
     override fun endLoadProfileData(data: ProfileData) {
         activity?.runOnUiThread {
             try {
+                nameEdit.setText(data.name)
                 heightEdit.setText(data.height.toString())
                 weightEdit.setText(data.weight.toString())
                 ageSpinner.setSelection(data.age - 1)

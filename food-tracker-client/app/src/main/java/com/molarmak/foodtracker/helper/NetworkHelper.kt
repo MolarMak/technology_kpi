@@ -37,8 +37,8 @@ fun apiResponse(TAG: String, response: Response?, view: PresenterType, action: (
         Log.d(TAG, responseString)
         if (response?.code() == 200) {
             val resData = JSONObject(responseString)
-            if (resData.has("result")) {
-                if (resData.getBoolean("result")) {
+            if (resData.has("status")) {
+                if (resData.getInt("status") == 1) {
                     if (resData.has("data")) {
                         if(!resData.isNull("data")) { //todo change it to response something
                             val res = resData.getJSONObject("data")

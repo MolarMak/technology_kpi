@@ -23,6 +23,7 @@ class RegisterPresenterImpl(private val view: RegisterView) : RegisterPresenterI
 
     override fun endRegister(token: String) {
         Cache.instance.token = token
+        startLoadProfileData()
     }
 
     override fun startLoadProfileData() {
@@ -33,7 +34,7 @@ class RegisterPresenterImpl(private val view: RegisterView) : RegisterPresenterI
     }
 
     override fun endLoadProfileData(data: ProfileData) {
-        view.endRegister(data.name.isNotEmpty() && data.age != 0 && data.height != 0 && data.weight != 0)
+        view.endRegister(data.name != null && data.name.isNotEmpty() && data.age != 0 && data.height != 0 && data.weight != 0)
     }
 
     override fun onError(errors: ArrayList<String>) {
